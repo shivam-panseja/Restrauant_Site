@@ -25,7 +25,7 @@ const registerController = async (req, res) => {
     const exisitng = await user.findOne({ email });
 
     if (exisitng) {
-      return res.status(500).json({
+      return res.status(400).json({
         status: false,
         message: "User with this email is already exists",
       });
@@ -38,6 +38,7 @@ const registerController = async (req, res) => {
       address,
       Phone_Number,
       userType,
+      
     });
     res.status(200).json({
       status: true,
@@ -45,7 +46,7 @@ const registerController = async (req, res) => {
       User,
     });
   } catch (error) {
-    res.status(500).json({
+    res.status(400).json({
       status: false,
       message: "Error In Register API",
       error,
@@ -68,6 +69,7 @@ const loginController = async (req, res) => {
     // check user
     const findUser = await user.findOne({ email: email });
     if (!findUser) {
+      console.log("facing the error here");
       return res.status(404).json({
         success: false,
         message: "Email or password mismatched",
@@ -77,7 +79,7 @@ const loginController = async (req, res) => {
     // check password
     const isMatch = await bcrypt.compare(password, findUser.password);
     if (!isMatch) {
-      res.status(500).json({
+      return res.status(401).json({
         status: false,
         message: "Incorrect Password",
       });
@@ -88,16 +90,16 @@ const loginController = async (req, res) => {
     });
     console.log("🚀 ~ loginController ~ token:", token)
     findUser.password = undefined;
-    res.status(200).json({
+    console.log("🚀 ~ res.status ~ findUser:", findUser)
+    return res.status(200).json({
       status: true,
       message: "Login successfully",
       token,
       findUser,
     });
-      console.log("🚀 ~ res.status ~ findUser:", findUser)
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({
+    return res.status(404).json({
       status: false,
       message: "error while loggin ",
     });

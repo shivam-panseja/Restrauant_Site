@@ -28,7 +28,7 @@ const getUserController = async (req, res) => {
       User, // Return the user object
     });
   } catch (error) {
-    res.status(500).json({
+    res.status(400).json({
       success: false,
       message: "Error fetching user",
       error: error.message,
@@ -48,9 +48,9 @@ const updateUserController = async (req, res) => {
       });
     }
 
-    const { email, password, Phone_Number, address, Profile, userType } =
-      req.body;
     console.log(req.body);
+    const { Name, email, password, Phone_Number, address, Profile, userType } =
+    req.body;
     const User = await user.findByIdAndUpdate(userId, {
       Name: req.body.Name,
       email: req.body.email,
@@ -58,14 +58,16 @@ const updateUserController = async (req, res) => {
       address: req.body.address,
       Profile: req.body.Profile,
       Phone_Number: req.body.Phone_Number,
-      Phone_Number: req.body.Phone_Number,
-    });
+      // Phone_Number: req.body.Phone_Number,
+    },
+  //  console.log("saving the data into database")
+  );
 
     User.save();
 
     return res.json({ status: 200, message: "Your profile is updated now " });
   } catch (error) {
-    return res.status(500).json({
+    return res.status(400).json({
       success: false,
       message: "Error fetching user",
       error: error.message,
@@ -86,7 +88,7 @@ const updatePasswordController = async (req, res) => {
     // get passwrod and update password
     const { oldPassword, newPassword } = req.body;
     if (!oldPassword || !newPassword) {
-      return res.status(500).send({
+      return res.status(400).send({
         success: false,
         message: "Please Provide Old or New Password",
       });
@@ -99,7 +101,7 @@ const updatePasswordController = async (req, res) => {
     const isMatch = await bcrypt.compare(oldPassword, User.password);
     console.log("🚀 ~ updatePassword ~ isMatch:", isMatch);
     if (!isMatch) {
-      return res.status(500).send({
+      return res.status(400).send({
         success: false,
         message: "THE OLD PASSWORD IS INCORRECT",
       });
@@ -111,7 +113,7 @@ const updatePasswordController = async (req, res) => {
     return res.json({ status: 200, message: "Your Password is updated now " });
   } catch (error) {
     console.log(error);
-    res.status(500).send({
+    res.status(400).send({
       success: false,
       message: "Error in Update Password API",
       error,
@@ -127,7 +129,7 @@ const deleteUserController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).send({
+    res.status(400).send({
       success: false,
       message: "Error in Update Password API",
       error,
