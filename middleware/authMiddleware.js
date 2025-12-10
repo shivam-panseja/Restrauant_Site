@@ -32,7 +32,7 @@ module.exports = async (req, res, next) => {
     });
   } catch (error) {
     console.log("Error in authentication middleware:", error);
-    res.status(500).json({
+    res.status(400).json({
       success: false,
       message: "Internal Server Error",
       error: error.message,

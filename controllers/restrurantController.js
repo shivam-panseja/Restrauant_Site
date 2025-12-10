@@ -3,7 +3,7 @@ const createResturantController = async (req,res) => {
   
     
     }catch (error)  {
-        res.status(500).json({
+        res.status(400).json({
           status: false,
           message: "Error In Create Restrauant API",
           error,
