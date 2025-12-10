@@ -25,6 +25,15 @@
     "mongodb": "^6.16.0",
     "mongoose": "^8.14.1",
     "morgan": "^1.10.0",
+    "nodemon": "^3.1.11",
     "project_1": "file:"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shivam-panseja/Restrauant_Site.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shivam-panseja/Restrauant_Site/issues"
+  },
+  "homepage": "https://github.com/shivam-panseja/Restrauant_Site#readme"
 }
